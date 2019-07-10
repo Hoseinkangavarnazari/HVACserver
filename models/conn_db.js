@@ -3,7 +3,7 @@ Here we should enter the spec of connection to the database
 */
 
 var mongoose = require('mongoose');
-
+db = "mongodb://localhost:27017/hvac";
 
 // connect to mongo function
 const open = () => {
@@ -16,5 +16,6 @@ const open = () => {
   return connection;
 };
 
+open();
 
 module.exports = open 

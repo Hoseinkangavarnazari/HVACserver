@@ -11,8 +11,6 @@ var nodeSchema = new Schema({
         setPoint: Number
     },
     body: String,
-    feedbacks: [{ setPoint: number, date: Date }],
-    date: { type: Date, default: Date.now },
     feedbackBan: Boolean
 });
 
