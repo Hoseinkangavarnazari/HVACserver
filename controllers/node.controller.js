@@ -43,30 +43,14 @@ exports.addNewNode = function (req, res) {
 
 
 
-const findDuplicateNode = async (params) => { 
-    try {  return await Node.findOne(params)
-    } catch(err) { console.log(err) }
-}
-
-exports.addNode = (req, res) => {
+exports.addNode = async (req, res) => {
     console.log(":::", "Received an unprocessed message. [AddNode EndPoint]")
     // define schema here
     let IP;
     let ID;
-
-    // check for dubplicate assignment
-
-    duplicate = findDuplicateNode({IP:IP});
-
-
-
-    console.log(duplicate);
-    if (duplicate){
-        res.send("Cannot register requested Node. The IP address is duplicated");
-        console.log("::: Cannot register requested Node. The IP address is duplicated")
-        return
-    }
-    // parse the incoming data 
+    
+    //  parsing incoming data ------------------------------------------------
+    
     if (req.body.IP && req.body.ID) {
         IP = req.body.IP;
         ID = req.body.ID;
@@ -74,6 +58,29 @@ exports.addNode = (req, res) => {
     } else {
         throw new Error("::: There is something wrong with the input value.")
     }
+
+    // ------------------------------------------------------------------------
+
+    // regex check should be here
+
+    // check for duplicates ---------------------------------------------------
+    
+    duplicate = await Node.find({
+        $or: [
+            { IP: IP },
+            { ID: ID }
+        ]
+    }
+    )
+
+    if (duplicate.length > 0) {
+        res.send("Cannot register requested Node. The Node spec is duplicated");
+        console.log("::: Cannot register requested Node. The Node spec is duplicated")
+        return
+    }
+
+
+    // ------------------------------------------------------------------------
 
     var newNode = new Node({
         IP: IP,
