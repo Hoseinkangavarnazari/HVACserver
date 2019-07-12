@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/', (req,res)=>{
-    console.log(req.body.PM)
+    console.log(req.body.PM, " IN RASP B")
     res.send("Received your packet successfully : RASP-B");
 })
 
