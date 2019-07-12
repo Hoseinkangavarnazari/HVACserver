@@ -9,9 +9,9 @@ db = "mongodb://localhost:27017/hvac";
 const open = () => {
   let connection = mongoose.connection;
   mongoose.Promise = global.Promise;
-  mongoose.connect(db);
+  mongoose.connect(db,{ useNewUrlParser: true });
   connection.on('open', () => {
-            console.log('We have connected to mongodb');
+            console.log('::: Connection with MongoDB established');
         });
   return connection;
 };
