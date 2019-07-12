@@ -42,12 +42,30 @@ exports.addNewNode = function (req, res) {
 };
 
 
+
+const findDuplicateNode = async (params) => { 
+    try {  return await Node.findOne(params)
+    } catch(err) { console.log(err) }
+}
+
 exports.addNode = (req, res) => {
     console.log(":::", "Received an unprocessed message. [AddNode EndPoint]")
     // define schema here
     let IP;
     let ID;
 
+    // check for dubplicate assignment
+
+    duplicate = findDuplicateNode({IP:IP});
+
+
+
+    console.log(duplicate);
+    if (duplicate){
+        res.send("Cannot register requested Node. The IP address is duplicated");
+        console.log("::: Cannot register requested Node. The IP address is duplicated")
+        return
+    }
     // parse the incoming data 
     if (req.body.IP && req.body.ID) {
         IP = req.body.IP;
@@ -57,23 +75,18 @@ exports.addNode = (req, res) => {
         throw new Error("::: There is something wrong with the input value.")
     }
 
-    var newNode = new node({
-        nodeName: req.query.name,
-        nodeID: "2190830714",
-        nodeStatus: {
-            status: true,
-            setPoint: 23
-        },
-        body: "something just for test",
-        feedbackBan: false
+    var newNode = new Node({
+        IP: IP,
+        ID: ID,
     });
 
     try {
         newNode.save();
-        res.send("everything is ok");
+        res.send("::: Saved into the database.");
+        console.log(":::  Saved into the database.")
 
     } catch (err) {
-        res.send("something went wrong");
+        res.send("::: There is something wrong with saving to DB");
+        console.log("::: There is something wrong with saving to DB")
     }
-
 }
