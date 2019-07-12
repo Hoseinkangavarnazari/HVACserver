@@ -5,11 +5,6 @@ var node_router = express.Router();
 var node_controller = require('../controllers/node.controller');
 
 
-node_router.get('/newNode',node_controller.addNewNode);
-// About page route.
-node_router.get('/about', function (req, res) {
-    res.send('tell about the raspberryPi');
-})
 
 
 //  Post requests
@@ -17,4 +12,10 @@ node_router.get('/about', function (req, res) {
 node_router.post('/status',node_controller.getStatus);
 node_router.post('/addNode', node_controller.addNode);
 node_router.post('/delete',node_controller.deleteNode);
+
+
+// put request
+node_router.put('/setpoint',node_controller.updateSetpoint);
+
+
 module.exports = node_router;  

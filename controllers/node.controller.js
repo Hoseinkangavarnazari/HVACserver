@@ -5,34 +5,6 @@ var Node = require('../models/node.model');
 
 
 // Display detail page for a specific Author.
-// I don't no it either connected to a post request or get request 
-exports.addNewNode = function (req, res) {
-    /*
-    querys I am expected is IP address and Id Name
-    */
-
-    // console.log(req.query.name);
-    // newNode = new Node({
-    //     nodeName: req.query.name,
-    //     nodeID: "2190830714",
-    //     nodeStatus: {
-    //         status: true,
-    //         setPoint: 23
-    //     },
-    //     body: "something just for test",
-    //     feedbackBan: false
-    // });
-
-    // try {
-    //     newNode.save();
-    //     res.send("everything is ok");
-
-    // } catch (err) {
-    //     res.send("something went wrong");
-    // }
-
-};
-
 
 exports.addNode = async (req, res) => {
     console.log(":::", "Received an unprocessed message. [AddNode EndPoint]")
@@ -130,7 +102,7 @@ exports.deleteNode = async (req, res) => {
             // throw new Error("::: There is something wrong with the input value.")
             console.log("::: Invalid message format")
         }
-    } catch(e){
+    } catch (e) {
         console.log(`Error ${e}`)
     }
     // ------------------------------------------------------------------------
@@ -157,5 +129,47 @@ exports.deleteNode = async (req, res) => {
 
 
 exports.updateSetpoint = async (req, res) => {
+    console.log(":::", "Received an unprocessed message. [updateSetpoint EndPoint]")
+    // define schema here
+    let ID;
+    let setpoint;
+    let status;
+    //  parsing incoming data ------------------------------------------------
 
+    // here setpoint cannot be zero error *******************
+    if (req.body.ID && req.body.setpoint && req.body.status) {
+        ID = req.body.ID;
+        setpoint = req.body.setpoint;
+        status = req.body.status;
+
+        // validity check for setpoint  will be added here
+
+        console.log(":::", `The requested status is for  ID ${ID}`)
+    } else {
+        throw new Error("::: There is something wrong with the input value.")
+    }
+    // ------------------------------------------------------------------------
+
+
+    // check for duplicates ---------------------------------------------------
+
+    resultNode = await Node.findOneAndUpdate({ ID: ID }, {
+        nodeStatus: {
+            status: status,
+            setPoint: setpoint
+        }
+    },
+        { useFindAndModify: false }
+    )
+
+
+    if (resultNode) {
+        resultNode = await Node.findOne({ ID: ID });
+        //zero has the error
+        res.send(resultNode);
+        console.log(`:::${resultNode}`);
+        return
+    } else {
+        res.send(`Requested node ${ID} not found in system`)
+    }
 }
