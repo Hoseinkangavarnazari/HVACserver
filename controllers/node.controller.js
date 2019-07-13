@@ -173,3 +173,40 @@ exports.updateSetpoint = async (req, res) => {
         res.send(`Requested node ${ID} not found in system`)
     }
 }
+
+
+
+// detailedData
+
+exports.detailedData = async(req,res)=>{
+     
+    console.log(":::", "Received an unprocessed message. [detailedData EndPoint]")
+    // define schema here
+    let ID;
+    let avg_temp;
+    let avg_hum;
+
+
+    //  parsing incoming data ------------------------------------------------
+    if (req.body.ID && req.body.avg_temp && req.body.avg_hum) {
+        ID = req.body.ID;
+        avg_temp = req.body.avg_temp;
+        avg_hum = req.body.avg_hum;
+
+   
+
+        // validity check for setpoint  will be added here
+
+        console.log(":::", `The request detailedData add  for  ID ${ID}`)
+        // valid
+        res.send("1");
+    } else {
+        throw new Error("::: There is something wrong with the input value.")
+        // invalid
+        res.send("0");
+
+    }
+    // ------------------------------------------------------------------------
+
+
+} 
