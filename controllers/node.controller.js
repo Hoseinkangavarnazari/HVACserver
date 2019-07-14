@@ -1,6 +1,6 @@
 
 var Node = require('../models/node.model');
-
+var { DateTime } = require('luxon');
 
 
 
@@ -178,28 +178,41 @@ exports.updateSetpoint = async (req, res) => {
 
 // detailedData
 
-exports.detailedData = async(req,res)=>{
-     
+exports.detailedData = async (req, res) => {
+
     console.log(":::", "Received an unprocessed message. [detailedData EndPoint]")
     // define schema here
     let ID;
     let avg_temp;
     let avg_hum;
+    let date; 
 
 
     //  parsing incoming data ------------------------------------------------
-    if (req.body.ID && req.body.avg_temp && req.body.avg_hum) {
+    if (req.body.ID && req.body.avg_temp && req.body.avg_hum && req.body.date) {
         ID = req.body.ID;
         avg_temp = req.body.avg_temp;
         avg_hum = req.body.avg_hum;
+        date = req.body.date ; 
 
-   
+
 
         // validity check for setpoint  will be added here
 
-        console.log(":::", `The request detailedData add  for  ID ${ID}`)
+
+
+        console.log(":::", `The request detailedData add  for  ID ${ID}, avgtemp${avg_temp}, avgHumidity ${avg_hum}`)
         // valid
-        res.send("1");
+
+        var d = DateTime.local().toISO().substring(0, DateTime.local().toISO().lastIndexOf("") - 6)
+        
+         test = new Date(date+'Z')
+         console.log(test , " ::::", new Date());
+
+         if (test < new Date()) {
+             console.log("true");
+        }
+        res.send(d);
     } else {
         throw new Error("::: There is something wrong with the input value.")
         // invalid
