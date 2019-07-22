@@ -25,6 +25,10 @@ app.use('/page', serverRouter);
 var node_route = require('./routes/node.routes');
 app.use('/node', node_route);
 
+var typeOne_route = require('./routes/typeOne.routes');
+app.use('/typeone', typeOne_route);
+
+
 // ------------------------------------------------------
 
 // communication from dashbord to server ---------------

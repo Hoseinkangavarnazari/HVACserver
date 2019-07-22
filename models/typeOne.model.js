@@ -8,7 +8,7 @@ var typeOne = new Schema({
     date: String, // e.g., 21/10/98
     sensorData: [{
         date: { type: String, default: "NONE" },
-        avgTemprature: { type: Number, default: -1 },
+        avgTemperature: { type: Number, default: -1 },
         avgHumidity: { type: Number, default: -1 },
         avgCO2: { type: Number, default: -1 }
     }],
