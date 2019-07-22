@@ -20,23 +20,23 @@ exports.statusCycle = async (req, res) => {
 
         date = req.body.date;
         console.log("::::before convert DATE::::", date);
-        date = new Date(date +'Z');
-        console.log("::::After convert DATE::::" , date );
+        date = new Date(date + 'Z');
+        console.log("::::After convert DATE::::", date);
 
         ID = req.body.ID;
         status.avgTemperature = req.body.status.avgTemperature;
-        status.avgHumidity = req.body.status.avgHumidity; 
-        status.avgCO2 = req.body.status.avgCO2;  
+        status.avgHumidity = req.body.status.avgHumidity;
+        status.avgCO2 = req.body.status.avgCO2;
 
         console.log(status)
-        // status.avgHumidity = req.body.status.avgHumidity; 
-        // status.avgCO2 = req.body.status.avgCO2;  
+
+        // find it or create one 
 
         console.log(":::", `The requested  ID is : ${ID}`)
     } else {
         throw new Error("::: There is something wrong with the input value.")
     }
-   
+
     try {
         // newNode.save();
         res.send(DateTime.local().toISO().substring(0, DateTime.local().toISO().lastIndexOf("") - 6));
@@ -52,39 +52,79 @@ exports.statusCycle = async (req, res) => {
 exports.MLCycle = async (req, res) => {
 
     console.log(":::", "Received an unprocessed message. [MLCycle::TypeOne endPoint]")
-
-
     // define schema here
     let ID;
     let date;
     let status;
 
     //  parsing incoming data ------------------------------------------------
-    if ( req.body.ID &&req.body.date && req.body.status) {
+    if (req.body.ID && req.body.date && req.body.status) {
 
+        // convert Time Standard
         date = req.body.date;
-        console.log("::::before convert DATE::::", date);
-        date = new Date(date +'Z');
-        console.log("::::After convert DATE::::" , date );
-
+        date = new Date(date + 'Z');
         status = req.body.status
+        ID = req.body.ID
+        dbFriendlydate = req.body.date.toString().split(" ")[0]
 
-        console.log(status)
-        // status.avgHumidity = req.body.status.avgHumidity; 
-        // status.avgCO2 = req.body.status.avgCO2;  
+        _typeOne = await TypeOne.find({
+            $and: [
+                { date: dbFriendlydate },
+                { ID: ID }
+            ]
+        })
 
-        console.log("Status :: ",req.body.status)
-        console.log("ID :: ",req.body.ID)
-        console.log("Date :: ",req.body.date)
+        console.log(_typeOne);
 
-        // console.log(":::", `The requested  ID is : ${ID}`)
+        if (_typeOne.length) {
+            // do the update
+
+            console.log("Update the type one.");
+
+            TypeOne.update(
+                {
+                    $and: [
+                        { date: dbFriendlydate },
+                        { ID: ID }
+                    ]
+                }, 
+                { $push: { MVdata: {
+                    date: req.body.date.toString(),
+                    status: status
+                } } },
+                ()=>{
+                    console.log("Successfully Done!");
+                }
+            );
+
+        
+        }
+        else {
+            // create newOne
+            console.log("Create new type One");
+            console.log(req.body.date.toString());
+            tempTypeOne = new TypeOne({
+                ID: ID,
+                date: dbFriendlydate,
+                sensorData: [],
+                MVdata: [
+                    {
+                        status: status,
+                        date: req.body.date.toString()
+                    }
+                ]
+
+            });
+
+            tempTypeOne.save()
+        }
+
     } else {
-
- 
         throw new Error("::: There is something wrong with the input value.")
     }
 
     try {
+
         // newNode.save();
         res.send(DateTime.local().toISO().substring(0, DateTime.local().toISO().lastIndexOf("") - 6));
         console.log("::: Saved into the database.")

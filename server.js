@@ -40,5 +40,6 @@ app.use('/webapi', web_route);
 // -----------------------------------------------------
 
 ip = "192.168.44.133";
+ip = "localhost"
 // run server
 app.listen(port,ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
