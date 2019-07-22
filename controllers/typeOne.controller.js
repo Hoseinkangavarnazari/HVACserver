@@ -23,8 +23,6 @@ exports.statusCycle = async (req, res) => {
         date = new Date(date +'Z');
         console.log("::::After convert DATE::::" , date );
 
-
-
         ID = req.body.ID;
         status.avgTemperature = req.body.status.avgTemperature;
         status.avgHumidity = req.body.status.avgHumidity; 
@@ -38,30 +36,11 @@ exports.statusCycle = async (req, res) => {
     } else {
         throw new Error("::: There is something wrong with the input value.")
     }
-    // ------------------------------------------------------------------------
-
-    // regex check should be here
-
-    // check for duplicates ---------------------------------------------------
-
-    //  validity= await Node.find({ ID: ID })
-
-    //  if not valid do not accept the request
-
-
-
-    // ------------------------------------------------------------------------
-
-    //  age hast ke hichi age nist create kon yedone jadid
-
-    // var newTypeOne = new TypeOne({
-    //     Date:
-    //     ID: ID,
-    // });
+   
     try {
         // newNode.save();
-        res.send(d);
-        console.log(":::  Saved into the database.")
+        res.send(DateTime.local().toISO().substring(0, DateTime.local().toISO().lastIndexOf("") - 6));
+        console.log("::: Saved into the database.")
 
     } catch (err) {
         res.send("::: There is something wrong with saving to DB");
@@ -70,9 +49,49 @@ exports.statusCycle = async (req, res) => {
 }
 
 
-exports.dynamicLearningCycle = async (req, res) => {
+exports.MLCycle = async (req, res) => {
 
-    console.log(":::", "Received an unprocessed message. [dynamicLearningCycle::TypeOne endPoint]")
+    console.log(":::", "Received an unprocessed message. [MLCycle::TypeOne endPoint]")
 
+
+    // define schema here
+    let ID;
+    let date;
+    let status;
+
+    //  parsing incoming data ------------------------------------------------
+    if ( req.body.ID &&req.body.date && req.body.status) {
+
+        date = req.body.date;
+        console.log("::::before convert DATE::::", date);
+        date = new Date(date +'Z');
+        console.log("::::After convert DATE::::" , date );
+
+        status = req.body.status
+
+        console.log(status)
+        // status.avgHumidity = req.body.status.avgHumidity; 
+        // status.avgCO2 = req.body.status.avgCO2;  
+
+        console.log("Status :: ",req.body.status)
+        console.log("ID :: ",req.body.ID)
+        console.log("Date :: ",req.body.date)
+
+        // console.log(":::", `The requested  ID is : ${ID}`)
+    } else {
+
+ 
+        throw new Error("::: There is something wrong with the input value.")
+    }
+
+    try {
+        // newNode.save();
+        res.send(DateTime.local().toISO().substring(0, DateTime.local().toISO().lastIndexOf("") - 6));
+        console.log("::: Saved into the database.")
+
+    } catch (err) {
+        res.send("::: There is something wrong with saving to DB");
+        console.log("::: There is something wrong with saving to DB")
+    }
 
 }

@@ -9,6 +9,7 @@ var typeOne_controller = require('../controllers/typeOne.controller');
 
 //  Post requests
 typeOne_router.post('/statuscycle', typeOne_controller.statusCycle);
+typeOne_router.post('/MLCycle', typeOne_controller.MLCycle);
 
 
 

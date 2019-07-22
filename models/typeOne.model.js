@@ -13,7 +13,6 @@ var typeOne = new Schema({
         avgCO2: { type: Number, default: -1 }
     }],
     MVdata: [{
-        newDataflagflag: Boolean,
         date: { type: String, default: "NONE" },
         status: { type: Boolean, default: false }
     }]
