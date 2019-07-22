@@ -3,6 +3,41 @@ var bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const port = 4000;
+const winston = require('winston')
+const { createLogger, format } = require('winston');
+const { combine, timestamp, label, prettyPrint } = format;
+
+
+// logger setting establishment
+const transports = {
+  console: new winston.transports.Console({ level: 'warn' }),
+  file: new winston.transports.File({ filename: 'combined.log', level: 'error' })
+};
+
+const logger = winston.createLogger({
+  format: combine(
+    timestamp(),
+    prettyPrint()
+  ),
+  transports: [
+    transports.console,
+    transports.file
+  ]
+});
+
+// activate info level logs
+transports.console.level = 'info';
+transports.file.level = 'info';
+
+//-------------------------------------------------
+
+
+logger.log({
+  level: 'info',
+  message: 'Testing the logger in the code!'
+});
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -42,4 +77,4 @@ app.use('/webapi', web_route);
 ip = "192.168.44.133";
 ip = "localhost"
 // run server
-app.listen(port,ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
+app.listen(port, ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
