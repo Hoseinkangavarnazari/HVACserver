@@ -12,7 +12,7 @@ exports.callRasp = async (req,res) => {
 
     await request({
         url: connect,
-        method: "POST",
+        method: "POST", 
         json: true,   // <--Very important!!!
         body: myJSONObject
     }, function (error, response, body) {

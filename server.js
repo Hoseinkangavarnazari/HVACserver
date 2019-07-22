@@ -2,7 +2,7 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 3000;
+const port = 4000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -35,6 +35,6 @@ app.use('/webapi', web_route);
 
 // -----------------------------------------------------
 
-ip = "192.168.40.101";
+ip = "192.168.44.133";
 // run server
 app.listen(port,ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
