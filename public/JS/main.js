@@ -23,15 +23,17 @@ function sendRequestRasp(param) {
 
   function updateSetPoint(param) {
 
-    let rasp = "http://localhost:" + param;
 
-    console.log("Request from browser to the main server");
+
+    console.log("Update setpoint request has been sent");
     $.ajax(
       {
-        url: "http://localhost:5000/webapi",
+        url: "http://localhost:5000/webapi/updateSetPoint",
         dataType : 'text',
         data: {
-          "connect": rasp
+          humiditySetPoint: "12",
+          temperatureSetPoint:"23",
+          CO2SetPoint:"40"
         },
         type: "POST", // if you want to send data via the "data" property change this to "POST". This can be omitted otherwise
         success: function (responseData) {

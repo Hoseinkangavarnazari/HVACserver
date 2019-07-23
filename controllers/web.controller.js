@@ -28,19 +28,22 @@ exports.callRasp = async (req, res) => {
 exports.updatedSetPoint = async (req, res) => {
 
     myJSONObject = {
-        temperatureSetPoint: "23",
-        humiditySetPoint: "50",
-        CO2SetPoint: "50"
+        temperatureSetPoint: req.body.temperatureSetPoint,
+        humiditySetPoint: req.body.humiditySetPoint,
+        CO2SetPoint: req.body.CO2SetPoint
     }
 
+
+    console.log(myJSONObject)
+
     await request({
-        url: "http://192.168.12.80:8000",
+        url: "http://192.168.12.80:8080/",
         method: "POST",
         json: true,   // <--Very important!!!
         body: myJSONObject
     }, function (error, response, body) {
-        console.log(response.body);
-        receivedResponse = response.body;
+        // console.log(response.body);
+        // receivedResponse = response.body;
     });
 
 

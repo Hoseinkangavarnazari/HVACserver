@@ -11,6 +11,7 @@ var web_controller = require('../controllers/web.controller');
 //  Post requests
 
 web_router.post('/',web_controller.callRasp);
+web_router.post('/updateSetPoint',web_controller.updatedSetPoint);
 
 
 
