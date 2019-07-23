@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="JS/main.js"></script>
 </head>
 
 <body>
@@ -25,32 +26,11 @@
       <button onclick="sendRequestRasp('4001')">Connect rasp A</button>
       <button onclick="sendRequestRasp('4002')">Connect rasp B</button>
 
+      <button onclick="updateSetPoint('23')">UpdateSetPoint</button>
+
 
     </div>
   </div>
 </body>
-<script>
-  function sendRequestRasp(param) {
-
-    let rasp = "http://localhost:" + param;
-
-    console.log("Request from browser to the main server");
-    $.ajax(
-      {
-        url: "http://192.168.40.101:3000/webapi",
-        dataType : 'text',
-        data: {
-          "connect": rasp
-        },
-        type: "POST", // if you want to send data via the "data" property change this to "POST". This can be omitted otherwise
-        success: function (responseData) {
-          var output = responseData
-          console.log(output);
-        },
-        error: console.error
-      }
-    );
-  }
-</script>
 
 </html>

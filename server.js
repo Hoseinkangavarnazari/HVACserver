@@ -2,10 +2,14 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
-const port = 4000;
+const port = 5000;
 const winston = require('winston')
 const { createLogger, format } = require('winston');
 const { combine, timestamp, label, prettyPrint } = format;
+
+
+// serve static files
+app.use(express.static('public'))
 
 
 // logger setting establishment
