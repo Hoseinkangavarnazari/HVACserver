@@ -15,10 +15,8 @@ node_router.post('/status',node_controller.getStatus);
 node_router.post('/addNode', node_controller.addNode);
 node_router.post('/delete',node_controller.deleteNode);
 
+// needed __________________________________________________________________________
 node_router.post('/detaileds_sensors_data', node_controller.detailedData);
-
-
-// put request
 node_router.put('/setpoint',node_controller.updateSetpoint);
 
 
