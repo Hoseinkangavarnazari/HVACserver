@@ -1,4 +1,8 @@
 
+//  there is no need to this controller at all at the moment 
+//  However I will keep this to use it as a example in connections
+
+
 var Node = require('../models/node.model');
 var { DateTime } = require('luxon');
 
