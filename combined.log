@@ -106,3 +106,48 @@
 { level: 'info',
   message: 'Testing the logger in the code!',
   timestamp: '2019-07-23T07:44:48.176Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:20:25.515Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:26:56.516Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:27:11.374Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:41:12.167Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:46:12.379Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:50:11.902Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:53:47.573Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T12:54:06.167Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:14:08.248Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:14:44.736Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:15:02.059Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:15:06.673Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:15:33.680Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:15:43.099Z' }
+{ level: 'info',
+  message: 'Testing the logger in the code!',
+  timestamp: '2019-08-01T13:18:11.615Z' }

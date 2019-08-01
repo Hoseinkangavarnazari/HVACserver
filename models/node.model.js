@@ -6,6 +6,7 @@ const connection = require("./conn_db")
 // var nodeSchema = new Schema({
 //     IP: String, //check by regex
 //     ID: String, //check by regex
+
 //     currentStatus:{
 //         status : { type: Boolean, default: true } , 
 //         setPoint: { type: Number, default: 23 }
@@ -18,7 +19,7 @@ var nodeSchema = new Schema({
     IP: String, //check by regex
     PORT: String, //check by regex
     location: String,
-    sensorCounter: Int16Array,
+    sensorCounter: Number,
     user: [
         {
             username: String,
@@ -41,8 +42,4 @@ var nodeSchema = new Schema({
     // },
     feedbackBan: { type: Boolean, default: false }
 });
-
-
-
-
 module.exports = mongoose.model('Node', nodeSchema);
