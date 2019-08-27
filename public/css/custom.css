@@ -1,0 +1,53 @@
+.html
+{
+    font-family: Roboto;
+}
+
+.line{
+    border-left: 1px solid whitesmoke;
+    height: 100px;
+    display: inline-block;
+    margin-right: 3px;
+    margin-left: 2px;
+    top: 0;
+}
+.right-blocks{
+    display: inline-flex;
+    position: relative;
+    margin: 0  0  0  0 ;
+    }
+.top-right-blocks{
+    display: inline-flex;
+    position: relative;
+    margin:0 0 30px 0;
+}
+.down-right-blocks{
+    display: inline-flex;
+    position: relative;
+    margin:30px 0 0 0;
+}
+.chart
+{
+    max-height:385px;
+}
+.single-tab1{
+    width: 300px;
+    height: 300px;
+}
+tr,td {
+    border-bottom: 1px solid rgb(17,27,45);
+}
+.table thead tr th
+{
+    border-bottom: 2px solid rgb(17,27,45);
+}
+.left-logos
+{
+    width: 30px;
+    height: 30px;
+    margin-right: 12px;
+}
+.input input
+{
+    color: black;
+}

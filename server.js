@@ -2,6 +2,8 @@ const express = require('express');
 var bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 const port = 5000;
 const winston = require('winston')
 const { createLogger, format } = require('winston');
@@ -19,11 +21,16 @@ const users = [
 ]
 
 
+function randomIntInc(low, high) {
+  return Math.floor(Math.random() * (high - low + 1) + low)
+}
+
+
 // configure passport.js to use the local strategy
 passport.use(new LocalStrategy(
   { usernameField: 'email' },
   (email, password, done) => {
-    axios.get(`http://localhost:5000/users?email=${email}`)
+    axios.get(`http://localhost:5001/users?email=${email}`)
     .then(res => {
       const user = res.data[0]
       if (!user) {
@@ -121,6 +128,19 @@ app.use('/page', serverRouter);
 
 // --------------------------------------------------------
 
+//  demo dashboard page ---------------------------------
+const demoRouter = express.Router();
+demoRouter.get('/', (req, res) => {
+  console.log("received a request from browser");
+  res.sendFile(path.join(__dirname + '/demo.html'));
+}
+)
+app.use('/demo', demoRouter);
+
+// --------------------------------------------------------
+
+
+
 // communication from rasp to server --------------------
 
 var node_route = require('./routes/node.routes');
@@ -164,6 +184,7 @@ app.post('/login', (req, res, next) => {
 })
 
 app.get('/authrequired', (req, res) => {
+  console.log(req.isAuthenticated())
   if(req.isAuthenticated()) {
     res.send('you hit the authentication endpoint\n')
   } else {
@@ -172,7 +193,29 @@ app.get('/authrequired', (req, res) => {
 })
 
 
+
+
+
 ip = "192.168.44.133";
 ip = "localhost"
 // run server
-app.listen(port, ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
+server.listen(port, ip, () => console.log(`::: Example app on ${ip} listening on port ${port}!`))
+
+io.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  
+  function updateStatus (){ 
+    socket.emit('statusUpdate', { 
+      insideTemp : randomIntInc(22,25) , 
+      insideHum: randomIntInc(12,14) , 
+      ambientTemp: randomIntInc(25,27), 
+      ambientHum:randomIntInc(12,14)
+    });
+  };
+  
+  setInterval(updateStatus, 2000);
+
+  socket.on('my other event', function (data) {
+    console.log(data);
+  });
+});
